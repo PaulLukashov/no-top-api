@@ -6,5 +6,10 @@ services:
     restart: always
     ports:
       - 3000:3000
+    networks:
+      - no-top-api
     volumes:
       - ./.env:/opt/app/.env
+networks:
+  no-top-api:
+    external: true
