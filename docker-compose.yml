@@ -1,5 +1,21 @@
 version: '3'
 services:
+  no.top.api:
+    container_name: main
+    build:
+      context: .
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - 5000:5000
+      - 9229:9229
+    command: npm run start:dev
+    depends_on:
+      - mongo
+    restart: always
   mongo:
     image: mongo:4.4.4
     container_name: mongo
@@ -11,11 +27,3 @@ services:
       - 27017:27017
     volumes:
       - ./mongo-data-4.4:/data/db
-  no.top.api:
-    image: no-top-api:latest
-    container_name: no-top-api
-    restart: always
-    ports:
-      - 3000:3000
-    volumes:
-      - ./.env:/opt/app.env
